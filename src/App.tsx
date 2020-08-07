@@ -16,7 +16,7 @@ export const app = dva({
   models,
   initState: {},
   extraReducers: { router: routerReducer },
-  onAction: [routerMiddlewareForDispatch],
+  onAction: [routerMiddlewareForDispatch]
 })
 
 const f: React.FC = app.start(

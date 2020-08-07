@@ -1,5 +1,5 @@
 import React from 'react'
 
-const HomePage = () => <div>HomePage</div>
+const HomePage = () => <div>HomePagedad</div>
 
 export default HomePage

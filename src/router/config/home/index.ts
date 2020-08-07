@@ -8,7 +8,7 @@ const routes: IRouteConfig[] = [
     component: HomePage,
     exact: true,
     pageTitle: '首页',
-    useLayout: true
+    useLayout: false
   }
 ]
 

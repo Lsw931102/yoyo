@@ -8,6 +8,6 @@ export default {
   reducers: {
     setState(state, { payload }) {
       return { ...state, ...payload }
-    },
-  },
+    }
+  }
 }
