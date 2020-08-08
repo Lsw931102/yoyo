@@ -1,0 +1,114 @@
+@import '@/assets/styles/index.scss';
+
+.CreateItem {
+  padding: 10px 0 12px;
+  border-bottom: 1px solid #efeff2;
+
+  .addLine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .address {
+      font-size: 15px;
+      font-weight: 500;
+      color: #000;
+      line-height: 21px;
+    }
+
+    .operateBox {
+      display: flex;
+      align-items: center;
+
+      .icItem {
+        width: 14px;
+        height: 14px;
+        margin-right: 15px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .key {
+    font-size: 13px;
+    font-weight: 400;
+    color: #666;
+    line-height: 19px;
+    margin-top: 9px;
+  }
+
+  .numLine {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 400;
+    color: #666;
+    line-height: 19px;
+    margin-top: 9px;
+
+    .item {
+      display: flex;
+      align-items: center;
+
+      .setNum {
+        width: 50px;
+        height: 16px;
+        background: rgba(29, 114, 255, 0.2);
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 400;
+        color: #1d72ff;
+        line-height: 15px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .moreLine {
+    display: flex;
+    align-items: center;
+    margin-top: 9px;
+
+    .title {
+      font-size: 12px;
+      font-weight: 400;
+      color: #666;
+      line-height: 17px;
+    }
+
+    .operateBox {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 85px;
+        height: 24px;
+        background: #fff;
+        border: 1px solid #1d72ff;
+        border-radius: 12px;
+
+        .icItem {
+          width: 12px;
+          height: 11px;
+          margin-right: 5px;
+        }
+
+        .icTxt {
+          font-size: 12px;
+          font-weight: 400;
+          color: #1d72ff;
+          line-height: 17px;
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import Router from './router'
 import { connectRouter, routerMiddleware, ConnectedRouter } from 'connected-react-router'
 import dva from './utils/dva'
 import models from './models'
+import 'antd-mobile/dist/antd-mobile.css'
 
 const createHistory = require('history').createBrowserHistory
 export const history = createHistory()

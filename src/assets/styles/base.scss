@@ -6,6 +6,32 @@ img {
   padding: 0;
 }
 
+/* 字体 */
+@font-face {
+  font-display: auto;
+  font-family: PingFangSC;
+  font-weight: normal;
+  src: url('../fonts/PingFangSC-Regular.ttf');
+}
+
+@font-face {
+  font-display: auto;
+  font-family: PingFangSC;
+  font-weight: 500;
+  src: url('../fonts/PingFangSC-Medium.ttf');
+}
+
+@font-face {
+  font-display: auto;
+  font-family: PingFangSC;
+  font-weight: 600;
+  src: url('../fonts/PingFangSC-Semibold.ttf');
+}
+
+body {
+  font-family: PingFangSC, 'HelveticaNeue', Helvetica, Arial, sans-serif !important;
+}
+
 /* 浮动 */
 .fl {
   float: left;
@@ -36,14 +62,14 @@ img {
 }
 
 // 适配vw单位
-$vw_base: 1920;
+$vw_base: 750;
 
 @function vw($px) {
   @return ($px / $vw_base) * 100vw;
 }
 
 //适配vh单位
-$vh_base: 1080;
+$vh_base: 1334;
 
 @function vh($px) {
   @return ($px / $vh_base) * 100vh;

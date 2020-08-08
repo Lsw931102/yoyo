@@ -1,9 +1,148 @@
+@import '@/assets/styles/index.scss';
+
 .homePage {
   min-height: 100vh;
+  background-color: #fff;
 
   .topBox {
-    width: 100%;
     height: 200px;
+    padding: 0 30px;
     background: linear-gradient(90deg, #2f83ff, #0057ff);
+
+    .line1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 63px;
+
+      .left {
+        display: flex;
+        align-items: center;
+
+        .rest {
+          opacity: 0.6;
+          font-size: 13px;
+          font-weight: 400;
+          text-align: left;
+          color: #fff;
+        }
+
+        .eyeIc {
+          width: 17px;
+          height: 12px;
+        }
+      }
+
+      .right {
+        .cornIc {
+          width: 19px;
+          height: 19px;
+        }
+      }
+    }
+
+    .banlance {
+      font-size: 32px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 45px;
+      margin-top: 3px;
+    }
+
+    .line3 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 17px;
+
+      .item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 150px;
+        height: 60px;
+        background: linear-gradient(228deg, #ffe083, #ffa706 112%);
+        border-radius: 5px 20px 0 20px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+
+        .ic {
+          width: 26px;
+          height: 32px;
+          margin-right: 15px;
+        }
+
+        .right {
+          display: flex;
+          flex-direction: column;
+          color: #fff;
+
+          .txt1 {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 23px;
+          }
+
+          .txt2 {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 17px;
+          }
+        }
+      }
+
+      .item1 {
+        margin-left: 9px;
+        background: linear-gradient(229deg, #5ce4b1 4%, #18c97b 108%);
+      }
+    }
+
+    .line2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .address {
+        font-size: 12px;
+        font-weight: 400;
+        color: #fff;
+        line-height: 17px;
+      }
+
+      .operateBox {
+        display: flex;
+        align-items: center;
+
+        .item {
+          display: flex;
+          align-items: center;
+          margin-left: 15px;
+
+          &:first-child {
+            margin-left: 0;
+          }
+
+          .ic {
+            width: 11px;
+            height: 11px;
+            margin-right: 6px;
+          }
+
+          .txt {
+            font-size: 12px;
+            font-weight: 400;
+            color: #fff;
+            line-height: 17px;
+          }
+        }
+      }
+    }
+  }
+
+  .tabs {
+    margin-top: 40px;
+
+    .tabItem {
+      padding: 0 33px;
+    }
   }
 }

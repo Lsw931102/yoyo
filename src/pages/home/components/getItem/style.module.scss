@@ -1,0 +1,53 @@
+@import '@/assets/styles/index.scss';
+
+.GetItem {
+  padding: 10px 0 12px;
+  border-bottom: 1px solid #efeff2;
+
+  .addLine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .address {
+      font-size: 15px;
+      font-weight: 500;
+      color: #000;
+      line-height: 21px;
+    }
+
+    .operateBox {
+      display: flex;
+      align-items: center;
+
+      .icItem {
+        width: 14px;
+        height: 14px;
+        margin-right: 15px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .key {
+    font-size: 13px;
+    font-weight: 400;
+    color: #666;
+    line-height: 19px;
+    margin-top: 9px;
+  }
+
+  .numLine {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 400;
+    color: #666;
+    line-height: 19px;
+    margin-top: 9px;
+  }
+}
