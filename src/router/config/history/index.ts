@@ -1,12 +1,12 @@
 import { IRouteConfig } from '../../typing'
-import HomePage from '@/pages/home'
+import HistoryPage from '@/pages/history'
 
 const routes: IRouteConfig[] = [
   {
-    path: '/',
-    component: HomePage,
+    path: '/history',
+    component: HistoryPage,
     exact: true,
-    pageTitle: '首页',
+    pageTitle: '领取记录',
     useLayout: false
   }
 ]

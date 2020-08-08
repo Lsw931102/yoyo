@@ -1,2 +1,3 @@
 import Home from './home'
-export default [...Home]
+import History from './history'
+export default [...Home, ...History]

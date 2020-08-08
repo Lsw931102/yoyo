@@ -79,5 +79,8 @@
     "*.{css,scss,less}": [
       "npm run lint:scss"
     ]
+  },
+  "devDependencies": {
+    "pont-engine": "1.0.3"
   }
 }
