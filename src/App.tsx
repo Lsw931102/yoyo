@@ -3,9 +3,6 @@ import Router from './router'
 import { connectRouter, routerMiddleware, ConnectedRouter } from 'connected-react-router'
 import dva from './utils/dva'
 import models from './models'
-import { ConfigProvider } from 'antd'
-import zhCN from 'antd/es/locale/zh_CN'
-import 'moment/locale/zh-cn'
 
 const createHistory = require('history').createBrowserHistory
 export const history = createHistory()
@@ -21,9 +18,7 @@ export const app = dva({
 
 const f: React.FC = app.start(
   <ConnectedRouter history={history}>
-    <ConfigProvider locale={zhCN}>
-      <Router />
-    </ConfigProvider>
+    <Router />
   </ConnectedRouter>
 )
 

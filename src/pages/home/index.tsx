@@ -1,12 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import styles from './style.module.scss'
 
 const HomePage = () => {
   return (
-    <>
-      <div>HomePagedad</div>
-      <Link to="/history">领取记录</Link>
-    </>
+    <div className={styles.homePage}>
+      <div className={styles.topBox}>
+        <div className={styles.line1}>
+          <div className={styles.left}>
+            <p>余额（FC）</p>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
