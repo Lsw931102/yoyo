@@ -1,3 +1,48 @@
-.histroyContent {
-  overflow: auto;
+@import '@/assets/styles/index.scss';
+
+.history {
+  min-height: 100vh;
+  background-color: #fff;
+  padding: 0 33px;
+  padding-top: 18px;
+  box-sizing: border-box;
+  .headers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 13px;
+    span {
+      font-size: 17px;
+      font-weight: 600;
+      color: #000;
+    }
+  }
+  .lists {
+    display: flex;
+    flex-direction: column;
+    .listItem {
+      padding: 10px 0;
+      box-sizing: border-box;
+      border-bottom: 1px solid #efeff2;
+      .listTop {
+        font-size: 15px;
+        font-weight: 600;
+        text-align: left;
+        color: #000;
+        margin-bottom: 10px;
+      }
+      .listBottom {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .price,
+        .time {
+          font-size: 13px;
+          font-weight: 400;
+          text-align: left;
+          color: #666;
+        }
+      }
+    }
+  }
 }
