@@ -1,10 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
 
 interface IProps {
   data: { [key: string]: any }
+  setSum: () => void
 }
-const CreateItem: React.FC<IProps> = ({ data }) => {
+const CreateItem: React.FC<IProps> = ({ data, setSum }) => {
   return (
     <div className={styles.CreateItem}>
       <div className={styles.addLine}>
@@ -18,7 +20,9 @@ const CreateItem: React.FC<IProps> = ({ data }) => {
       <div className={styles.numLine}>
         <div className={styles.item}>
           <p>领取：{data.sum}FC</p>
-          <p className={styles.setNum}>设置金额</p>
+          <div className={styles.setNum} onClick={setSum}>
+            设置金额
+          </div>
         </div>
         <p>数量：{data.num}个</p>
         <p>已领：{data.got}个</p>
@@ -34,10 +38,10 @@ const CreateItem: React.FC<IProps> = ({ data }) => {
             <img src={require('../../../../assets/images/avatar.jpg')} alt="" className={styles.icItem} />
             <p className={styles.icTxt}>撤回红包</p>
           </div>
-          <div className={styles.item}>
+          <Link className={styles.item} to="/history">
             <img src={require('../../../../assets/images/avatar.jpg')} alt="" className={styles.icItem} />
             <p className={styles.icTxt}>领取记录</p>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

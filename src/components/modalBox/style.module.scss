@@ -7,6 +7,7 @@
   left: 0;
   top: 0;
   z-index: 9;
+
   .bc {
     height: 100vh;
     width: 100%;
@@ -17,9 +18,10 @@
     background: #000;
     z-index: 10;
   }
+
   .modalSection {
     width: 295px;
-    height: 238px;
+    height: fit-content;
     background-color: #fff;
     border-radius: 10px;
     z-index: 11;
@@ -31,11 +33,13 @@
     bottom: 0;
     padding: 27px 25px 30px;
     box-sizing: border-box;
+
     svg {
       position: absolute;
       right: 10px;
       top: 10px;
     }
+
     .text {
       font-size: 13px;
       font-weight: 400;
@@ -43,8 +47,10 @@
       color: #666;
       margin-bottom: 5px;
     }
+
     .inputs {
       margin-top: 12px;
+
       input {
         width: 100%;
         height: 32px;
@@ -52,7 +58,9 @@
         padding: 0 10px;
         box-sizing: border-box;
         outline: none;
-        border: 0; /* 方法1 */
+        border: 0;
+
+        /* 方法1 */
         background: #f8f8f8;
         border-radius: 6px;
         font-size: 13px;
@@ -60,12 +68,14 @@
         color: #333;
         margin-bottom: 8px;
       }
+
       input:-webkit-input-placeholder {
         /* WebKit browsers */
         font-size: 13px;
         font-weight: 300;
         color: #999;
       }
+
       input:-moz-placeholder {
         /* Mozilla Firefox 4 to 18 */
         font-size: 13px;
@@ -73,6 +83,7 @@
         color: #999;
       }
     }
+
     .buttons {
       margin-top: 12px;
       width: 100%;
@@ -85,11 +96,5 @@
       font-weight: 600;
       color: #fff;
     }
-  }
-  .modalSection2 {
-    height: 198px;
-  }
-  .modalSection3 {
-    height: 179px;
   }
 }

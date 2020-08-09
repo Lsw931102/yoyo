@@ -1,10 +1,12 @@
 import React from 'react'
 import { Icon } from 'antd-mobile'
+import { useHistory } from 'react-router-dom'
 import styles from './style.module.scss'
 import '@/utils/common/indetx'
 import { returnAddrs } from '@/utils/common/indetx'
 
 const HistoryPage = () => {
+  const history = useHistory()
   // 模拟数据
   const lists = [
     {
@@ -34,7 +36,7 @@ const HistoryPage = () => {
     return (
       <>
         <section className={styles.headers}>
-          <Icon type="left" color="#000000" />
+          <Icon type="left" color="#000000" onClick={() => history.goBack()} />
           <span>领取记录</span>
           <label />
         </section>

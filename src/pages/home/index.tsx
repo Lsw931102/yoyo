@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import cs from 'classnames'
 import { Tabs } from 'antd-mobile'
 import styles from './style.module.scss'
-import { CreateItem, GetItem } from './components'
+import { CreateItem, GetItem, CreateModal, GetModal, SetnumModal } from './components'
+import ShowModal from '@/components/modalBox'
 
 interface Tab {
   title: string
@@ -11,9 +12,16 @@ interface Tab {
 const HomePage = () => {
   const [isLogin] = useState(true)
   const [tabVal, setTabVal] = useState('1')
+  const [createModal, setCreate] = useState(false)
+  const [getModal, setGet] = useState(false)
+  const [setsumModal, setSum] = useState(false)
 
   const tabChange = (tab: Tab) => {
     setTabVal(tab.sub)
+  }
+
+  const openSetSum = () => {
+    setSum(true)
   }
 
   const tabs: Tab[] = [
@@ -109,14 +117,14 @@ const HomePage = () => {
           )}
         </div>
         <div className={styles.line3}>
-          <div className={styles.item}>
+          <div className={styles.item} onClick={() => setCreate(true)}>
             <img src={require('../../assets/images/avatar.jpg')} alt="" className={styles.ic} />
             <div className={styles.right}>
               <p className={styles.txt1}>创建</p>
               <p className={styles.txt2}>口令红包</p>
             </div>
           </div>
-          <div className={cs(styles.item, styles.item1)}>
+          <div className={cs(styles.item, styles.item1)} onClick={() => setGet(true)}>
             <img src={require('../../assets/images/avatar.jpg')} alt="" className={styles.ic} />
             <div className={styles.right}>
               <p className={styles.txt1}>领取</p>
@@ -135,7 +143,7 @@ const HomePage = () => {
         >
           <div className={styles.tabItem}>
             {lists.map((item, index) => (
-              <CreateItem data={item} key={`create${index}`} />
+              <CreateItem data={item} key={`create${index}`} setSum={openSetSum} />
             ))}
           </div>
           <div className={styles.tabItem}>
@@ -145,6 +153,15 @@ const HomePage = () => {
           </div>
         </Tabs>
       </div>
+      <ShowModal isShow={createModal} close={() => setCreate(false)}>
+        <CreateModal />
+      </ShowModal>
+      <ShowModal isShow={getModal} close={() => setGet(false)}>
+        <GetModal />
+      </ShowModal>
+      <ShowModal isShow={setsumModal} close={() => setSum(false)}>
+        <SetnumModal />
+      </ShowModal>
     </div>
   )
 }
