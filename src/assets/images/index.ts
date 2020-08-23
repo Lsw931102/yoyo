@@ -1,4 +1,15 @@
-import Avatar from './avatar.jpg'
-export default {
-  Avatar
-}
+import bg from './bg.png'
+import copyBlack from './copy-black.png'
+import copyWhite from './copy-white.png'
+import createIc from './create.png'
+import del from './del.png'
+import exchange from './exchange.png'
+import eyeClose from './eye-close.png'
+import eyeOpen from './eye-open.png'
+import fcIc from './fc.png'
+import getIc from './get.png'
+import postIc from './post.png'
+import receiveIc from './receive.png'
+import repealIc from './repeal.png'
+
+export { bg, copyBlack, copyWhite, createIc, del, exchange, eyeClose, eyeOpen, fcIc, getIc, postIc, receiveIc, repealIc }

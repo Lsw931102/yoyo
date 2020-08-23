@@ -14,6 +14,7 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': ['error', { allowSingleExtends: true }],
     '@typescript-eslint/no-explicit-any': 'off',
     'no-console': 'error',
-    'no-empty': ['error', { allowEmptyCatch: true }]
+    'no-empty': ['error', { allowEmptyCatch: true }],
+    '@typescript-eslint/ban-ts-ignore': 'off'
   }
 }

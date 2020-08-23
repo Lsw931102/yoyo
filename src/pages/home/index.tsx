@@ -1,84 +1,96 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useToggleState } from '@/utils/hooks'
 import cs from 'classnames'
-import { Tabs } from 'antd-mobile'
+import { Tabs, Toast, Modal } from 'antd-mobile'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import styles from './style.module.scss'
-import { CreateItem, GetItem, CreateModal, GetModal, SetnumModal } from './components'
+import { GetItem, CreateModal, GetModal, SetnumModal, LoginModal, SendList } from './components'
 import ShowModal from '@/components/modalBox'
+import * as imgs from '@/assets/images'
+import { returnAddrs } from '@/utils/common'
+import { setLocalStorage, getLocalStorage } from '@/utils/storage'
+import { fcCon, unit, cfx, abi } from '@/ventor'
+import Nodata from '@/components/noData'
 
+const alert = Modal.alert
 interface Tab {
   title: string
   sub: string
 }
 const HomePage = () => {
-  const [isLogin] = useState(true)
+  const [isLogin, setLogin] = useToggleState(getLocalStorage('account') ? true : false)
+  const [loginShow, setLoginShow] = useToggleState(false)
   const [tabVal, setTabVal] = useState('1')
-  const [createModal, setCreate] = useState(false)
-  const [getModal, setGet] = useState(false)
-  const [setsumModal, setSum] = useState(false)
+  const [createModal, setCreate] = useToggleState(false)
+  const [getModal, setGet] = useToggleState(false)
+  const [setsumModal, setSum] = useToggleState(false)
+  const [restShow, setRest] = useToggleState(false)
+  const [userBanlance, setBanlance] = useState('')
+  const [gotList, setGotList] = useState([])
+  const [curAddress, setCurAddress] = useState('') // 当前点击的项
+
+  useEffect(() => {
+    init()
+    getGotList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const init = () => {
+    getuserBanlance()
+  }
+
+  const login = (account: string, privateKey: string) => {
+    setLogin(true)
+    localStorage.clear()
+    setLocalStorage('account', account)
+    setLocalStorage('privateKey', privateKey)
+    setLoginShow()
+  }
 
   const tabChange = (tab: Tab) => {
     setTabVal(tab.sub)
   }
 
-  const openSetSum = () => {
-    setSum(true)
+  const openSetSum = curAddress => {
+    setSum()
+    setCurAddress(curAddress)
+  }
+
+  const getuserBanlance = async () => {
+    if (getLocalStorage('account')) {
+      const val = await fcCon.balanceOf(getLocalStorage('account') || '')
+      setBanlance(unit.fromDripToCFX(val))
+    }
+  }
+  const getGotList = () => {
+    const gotArr: string[] = JSON.parse(getLocalStorage('gotArr') || '[]')
+    if (gotArr.length) {
+      const gotList = []
+      gotArr.map(async (it: string) => {
+        const nowContract = cfx.Contract({
+          abi,
+          address: it
+        })
+        const info = JSON.parse(JSON.stringify(await nowContract.getWelfareInfo(getLocalStorage('account') || '')))
+        // console.log(info, 333333)
+        gotList.push({
+          address: it,
+          key: info[0],
+          sum: Number(info[3]) ? unit.fromDripToCFX(Number(info[3])) : Number(info[3]),
+          num: Number(info[1]),
+          got: Number(info[1]) - Number(info[2]),
+          status: Number(info[4])
+        })
+        if (gotList.length === gotArr.length) {
+          setGotList(gotList)
+        }
+      })
+    }
   }
 
   const tabs: Tab[] = [
     { title: '我创建的', sub: '1' },
     { title: '我领取的', sub: '2' }
-  ]
-
-  const lists = [
-    {
-      address: '0x11ed07c7070701555bfcc989',
-      key: 'e43424',
-      sum: 10,
-      num: 20,
-      got: 15
-    },
-    {
-      address: '0x11ed07c7070701555bfcc989',
-      key: 'e43424',
-      sum: 10,
-      num: 20,
-      got: 15
-    },
-    {
-      address: '0x11ed07c7070701555bfcc989',
-      key: 'e43424',
-      sum: 10,
-      num: 20,
-      got: 15
-    },
-    {
-      address: '0x11ed07c7070701555bfcc989',
-      key: 'e43424',
-      sum: 10,
-      num: 20,
-      got: 15
-    },
-    {
-      address: '0x11ed07c7070701555bfcc989',
-      key: 'e43424',
-      sum: 10,
-      num: 20,
-      got: 15
-    },
-    {
-      address: '0x11ed07c7070701555bfcc989',
-      key: 'e43424',
-      sum: 10,
-      num: 20,
-      got: 15
-    },
-    {
-      address: '0x11ed07c7070701555bfcc989',
-      key: 'e43424',
-      sum: 10,
-      num: 20,
-      got: 15
-    }
   ]
 
   return (
@@ -87,45 +99,56 @@ const HomePage = () => {
         <div className={styles.line1}>
           <div className={styles.left}>
             <p className={styles.rest}>余额（FC）</p>
-            <img src={require('../../assets/images/avatar.jpg')} alt="" className={styles.eyeIc} />
+            {isLogin ? (
+              <img src={restShow ? imgs.eyeOpen : imgs.eyeClose} alt="" className={styles.eyeIc} onClick={() => setRest()} />
+            ) : null}
           </div>
           <div className={styles.right}>
-            <img src={require('../../assets/images/avatar.jpg')} alt="" className={styles.cornIc} />
+            <img src={imgs.fcIc} alt="" className={styles.cornIc} />
           </div>
         </div>
-        <p className={styles.banlance}>{isLogin ? 2000 : '-'}</p>
+        <p className={styles.banlance}>{isLogin && restShow ? Number(userBanlance).toFixed(4) : '****'}</p>
         <div className={styles.line2}>
-          <p className={styles.address}>{isLogin ? '0x11ed07c4…1555bfcc989' : ''}</p>
+          <p className={styles.address}>{isLogin ? returnAddrs(getLocalStorage('account') || '') : ''}</p>
           {isLogin ? (
             <div className={styles.operateBox}>
-              <div className={styles.item}>
-                <img src={require('../../assets/images/avatar.jpg')} alt="" className={styles.ic} />
-                <p className={styles.txt}>复制</p>
-              </div>
-              <div className={styles.item}>
-                <img src={require('../../assets/images/avatar.jpg')} alt="" className={styles.ic} />
+              <CopyToClipboard text={getLocalStorage('account') || ''} onCopy={() => Toast.success('复制成功')}>
+                <div className={styles.item}>
+                  <img src={imgs.copyWhite} alt="" className={styles.ic} />
+                  <p className={styles.txt}>复制</p>
+                </div>
+              </CopyToClipboard>
+              <div
+                className={styles.item}
+                onClick={() =>
+                  alert('提示', '切换后账户历史记录信息将清空，确认切换账号吗？', [
+                    { text: '取消' },
+                    { text: '确认', onPress: () => setLoginShow(true) }
+                  ])
+                }
+              >
+                <img src={imgs.exchange} alt="" className={styles.ic} />
                 <p className={styles.txt}>切换</p>
               </div>
             </div>
           ) : (
             <div className={styles.operateBox}>
-              <div className={styles.item}>
-                <img src={require('../../assets/images/avatar.jpg')} alt="" className={styles.ic} />
-                <p className={styles.txt}>请登录</p>
+              <div className={styles.item} onClick={() => setLoginShow()}>
+                <p className={styles.txt}>请点击登录</p>
               </div>
             </div>
           )}
         </div>
         <div className={styles.line3}>
-          <div className={styles.item} onClick={() => setCreate(true)}>
-            <img src={require('../../assets/images/avatar.jpg')} alt="" className={styles.ic} />
+          <div className={styles.item} onClick={() => setCreate()}>
+            <img src={imgs.createIc} alt="" className={styles.ic} />
             <div className={styles.right}>
               <p className={styles.txt1}>创建</p>
               <p className={styles.txt2}>口令红包</p>
             </div>
           </div>
-          <div className={cs(styles.item, styles.item1)} onClick={() => setGet(true)}>
-            <img src={require('../../assets/images/avatar.jpg')} alt="" className={styles.ic} />
+          <div className={cs(styles.item, styles.item1)} onClick={() => setGet()}>
+            <img src={imgs.getIc} alt="" className={styles.ic} />
             <div className={styles.right}>
               <p className={styles.txt1}>领取</p>
               <p className={styles.txt2}>口令红包</p>
@@ -142,25 +165,28 @@ const HomePage = () => {
           }}
         >
           <div className={styles.tabItem}>
-            {lists.map((item, index) => (
-              <CreateItem data={item} key={`create${index}`} setSum={openSetSum} />
-            ))}
+            <SendList openSetSum={openSetSum} />
           </div>
           <div className={styles.tabItem}>
-            {lists.map((item, index) => (
-              <GetItem data={item} key={`get${index}`} />
-            ))}
+            {gotList.length ? (
+              gotList.map((item, index) => <GetItem data={item} key={`get${index}`} refreshPage={getGotList} />)
+            ) : (
+              <Nodata />
+            )}
           </div>
         </Tabs>
       </div>
       <ShowModal isShow={createModal} close={() => setCreate(false)}>
-        <CreateModal />
+        <CreateModal freshPage={init} close={() => setCreate(false)} />
       </ShowModal>
       <ShowModal isShow={getModal} close={() => setGet(false)}>
-        <GetModal />
+        <GetModal freshGot={getGotList} close={() => setGet(false)} />
       </ShowModal>
       <ShowModal isShow={setsumModal} close={() => setSum(false)}>
-        <SetnumModal />
+        <SetnumModal address={curAddress} freshPage={init} close={() => setSum(false)} />
+      </ShowModal>
+      <ShowModal isShow={loginShow} close={() => setLoginShow(false)}>
+        <LoginModal login={login} />
       </ShowModal>
     </div>
   )

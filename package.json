@@ -24,6 +24,7 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "husky": "^4.2.3",
+    "js-conflux-sdk": "^0.13.4",
     "lint-staged": "^10.0.8",
     "node-sass": "^4.13.1",
     "prettier": "^1.19.1",
@@ -35,6 +36,7 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-touch-loader": "^1.1.4",
     "stylelint": "^13.3.2",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",
@@ -81,6 +83,7 @@
     ]
   },
   "devDependencies": {
-    "pont-engine": "1.0.3"
+    "pont-engine": "1.0.3",
+    "react-copy-to-clipboard": "^5.0.2"
   }
 }

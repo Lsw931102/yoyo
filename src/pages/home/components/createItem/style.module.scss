@@ -24,6 +24,7 @@
         width: 14px;
         height: 14px;
         margin-right: 15px;
+        cursor: pointer;
 
         &:last-child {
           margin-right: 0;
@@ -83,7 +84,6 @@
     .operateBox {
       flex: 1;
       display: flex;
-      justify-content: space-between;
       align-items: center;
 
       .item {
@@ -95,6 +95,8 @@
         background: #fff;
         border: 1px solid #1d72ff;
         border-radius: 12px;
+        margin-right: 6px;
+        cursor: pointer;
 
         .icItem {
           width: 12px;

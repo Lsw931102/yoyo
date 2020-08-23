@@ -7,7 +7,8 @@
   .topBox {
     height: 200px;
     padding: 0 30px;
-    background: linear-gradient(90deg, #2f83ff, #0057ff);
+    background: url('../../assets//images//bg.png') no-repeat top center;
+    background-size: 100% 200px;
 
     .line1 {
       display: flex;
@@ -30,6 +31,7 @@
         .eyeIc {
           width: 17px;
           height: 12px;
+          cursor: pointer;
         }
       }
 
@@ -64,6 +66,7 @@
         background: linear-gradient(228deg, #ffe083, #ffa706 112%);
         border-radius: 5px 20px 0 20px;
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+        cursor: pointer;
 
         .ic {
           width: 26px;
@@ -125,6 +128,7 @@
             width: 11px;
             height: 11px;
             margin-right: 6px;
+            cursor: pointer;
           }
 
           .txt {

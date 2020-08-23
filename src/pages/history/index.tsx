@@ -1,69 +1,52 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Icon } from 'antd-mobile'
 import { useHistory } from 'react-router-dom'
 import styles from './style.module.scss'
-import '@/utils/common/indetx'
-import { returnAddrs } from '@/utils/common/indetx'
+import { abi, cfx } from '@/ventor'
+import Nodata from '@/components/noData'
 
 const HistoryPage = () => {
   const history = useHistory()
-  // 模拟数据
-  const lists = [
-    {
-      id: 1,
-      addrs: '0x11ed07c41231231555bfcc989',
-      price: 146,
-      unit: 'FC',
-      time: '2020/09/07 22:00'
-    },
-    {
-      id: 2,
-      addrs: '0x11ed07c41231231555bfcc989',
-      price: 246,
-      unit: 'FC',
-      time: '2020/09/07 22:00'
-    },
-    {
-      id: 3,
-      addrs: '0x11ed07c41231231555bfcc989',
-      price: 346,
-      unit: 'FC',
-      time: '2020/09/07 22:00'
-    }
-  ]
+  const [list, setList] = useState([])
+
+  useEffect(() => {
+    getList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const getList = async () => {
+    const contract = cfx.Contract({
+      abi,
+      address: history.location.query.address
+    })
+    const list: [] = await contract.getAccountList()
+    list.length && setList(list)
+  }
   // 头部返回板块
   const Headers = () => {
     return (
-      <>
-        <section className={styles.headers}>
-          <Icon type="left" color="#000000" onClick={() => history.goBack()} />
-          <span>领取记录</span>
-          <label />
-        </section>
-      </>
+      <div className={styles.headers}>
+        <Icon type="left" color="#000000" onClick={() => history.goBack()} />
+        <span>领取记录</span>
+        <label />
+      </div>
     )
   }
   const Lists = () => {
-    return <section className={styles.lists}>{ReturnListItem(lists[0])}</section>
-  }
-  const ReturnListItem = item => {
     return (
-      <div className={styles.listItem}>
-        <div className={styles.listTop}>{returnAddrs(item.addrs)}</div>
-        <div className={styles.listBottom}>
-          <div className={styles.price}>
-            {item.price}
-            {item.unit}
+      <section className={styles.lists}>
+        {list.map((it, index) => (
+          <div className={styles.listItem} key={`history${index}`}>
+            <div className={styles.listTop}>{it}</div>
           </div>
-          <div className={styles.time}>{item.time}</div>
-        </div>
-      </div>
+        ))}
+      </section>
     )
   }
   return (
     <div className={styles.history}>
       <Headers />
-      <Lists />
+      {list.length ? <Lists /> : <Nodata />}
     </div>
   )
 }
