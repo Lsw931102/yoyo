@@ -1,7 +1,7 @@
 @import '@/assets/styles/index.scss';
 
 .CreateItem {
-  padding: 10px 0 12px;
+  padding: 10px 0 20px;
   border-bottom: 1px solid #efeff2;
 
   .addLine {
@@ -57,7 +57,7 @@
 
       .setNum {
         width: 50px;
-        height: 16px;
+        height: 16px !important;
         background: rgba(29, 114, 255, 0.2);
         border-radius: 3px;
         font-size: 11px;
@@ -65,6 +65,7 @@
         color: #1d72ff;
         line-height: 15px;
         margin-left: 5px;
+        text-align: center;
       }
     }
   }
@@ -72,13 +73,14 @@
   .moreLine {
     display: flex;
     align-items: center;
-    margin-top: 9px;
+    margin-top: 20px;
 
     .title {
       font-size: 12px;
       font-weight: 400;
       color: #666;
       line-height: 17px;
+      flex-shrink: 0;
     }
 
     .operateBox {
@@ -91,7 +93,7 @@
         justify-content: center;
         align-items: center;
         width: 85px;
-        height: 24px;
+        height: 24px !important;
         background: #fff;
         border: 1px solid #1d72ff;
         border-radius: 12px;

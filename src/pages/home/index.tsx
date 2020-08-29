@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useToggleState } from '@/utils/hooks'
 import cs from 'classnames'
 import { Tabs, Toast, Modal } from 'antd-mobile'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import styles from './style.module.scss'
-import { GetItem, CreateModal, GetModal, SetnumModal, LoginModal, SendList } from './components'
+import { CreateModal, GetModal, SetnumModal, LoginModal, SendList, GotList } from './components'
 import ShowModal from '@/components/modalBox'
 import * as imgs from '@/assets/images'
 import { returnAddrs } from '@/utils/common'
 import { setLocalStorage, getLocalStorage } from '@/utils/storage'
-import { fcCon, unit, cfx, abi } from '@/ventor'
-import Nodata from '@/components/noData'
+import { fcCon, unit } from '@/ventor'
 
 const alert = Modal.alert
 interface Tab {
@@ -29,9 +28,11 @@ const HomePage = () => {
   const [gotList, setGotList] = useState([])
   const [curAddress, setCurAddress] = useState('') // 当前点击的项
 
+  const sendRef = useRef()
+  const gotRef = useRef()
+
   useEffect(() => {
     init()
-    getGotList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -62,30 +63,15 @@ const HomePage = () => {
       setBanlance(unit.fromDripToCFX(val))
     }
   }
-  const getGotList = () => {
-    const gotArr: string[] = JSON.parse(getLocalStorage('gotArr') || '[]')
-    if (gotArr.length) {
-      const gotList = []
-      gotArr.map(async (it: string) => {
-        const nowContract = cfx.Contract({
-          abi,
-          address: it
-        })
-        const info = JSON.parse(JSON.stringify(await nowContract.getWelfareInfo(getLocalStorage('account') || '')))
-        // console.log(info, 333333)
-        gotList.push({
-          address: it,
-          key: info[0],
-          sum: Number(info[3]) ? unit.fromDripToCFX(Number(info[3])) : Number(info[3]),
-          num: Number(info[1]),
-          got: Number(info[1]) - Number(info[2]),
-          status: Number(info[4])
-        })
-        if (gotList.length === gotArr.length) {
-          setGotList(gotList)
-        }
-      })
-    }
+
+  const refreshSend = () => {
+    // @ts-ignore
+    sendRef.current.pageRefresh()
+  }
+
+  const refreshGot = () => {
+    // @ts-ignore
+    gotRef.current.pageRefresh()
   }
 
   const tabs: Tab[] = [
@@ -165,25 +151,21 @@ const HomePage = () => {
           }}
         >
           <div className={styles.tabItem}>
-            <SendList openSetSum={openSetSum} />
+            <SendList openSetSum={openSetSum} cRef={sendRef} />
           </div>
           <div className={styles.tabItem}>
-            {gotList.length ? (
-              gotList.map((item, index) => <GetItem data={item} key={`get${index}`} refreshPage={getGotList} />)
-            ) : (
-              <Nodata />
-            )}
+            <GotList cRef={gotRef} />
           </div>
         </Tabs>
       </div>
       <ShowModal isShow={createModal} close={() => setCreate(false)}>
-        <CreateModal freshPage={init} close={() => setCreate(false)} />
+        <CreateModal freshPage={refreshSend} close={() => setCreate(false)} />
       </ShowModal>
       <ShowModal isShow={getModal} close={() => setGet(false)}>
-        <GetModal freshGot={getGotList} close={() => setGet(false)} />
+        <GetModal freshGot={refreshGot} close={() => setGet(false)} />
       </ShowModal>
       <ShowModal isShow={setsumModal} close={() => setSum(false)}>
-        <SetnumModal address={curAddress} freshPage={init} close={() => setSum(false)} />
+        <SetnumModal address={curAddress} freshPage={refreshSend} close={() => setSum(false)} />
       </ShowModal>
       <ShowModal isShow={loginShow} close={() => setLoginShow(false)}>
         <LoginModal login={login} />

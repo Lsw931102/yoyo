@@ -48,16 +48,19 @@ const CreateItem: React.FC<IProps> = ({ data, setSum, freshPage }) => {
   const withdraw = async () => {
     Toast.loading('销毁中...', 1800)
     try {
-      const res = await contract
-        .withdraw()
+      await contract
+        .haiyoushui()
         .sendTransaction({ from: account })
         .confirmed()
+
+      // console.log('销毁成功')
       del()
       freshPage()
       Toast.hide()
     } catch (err) {
+      // console.log(err)
       Toast.hide()
-      Toast.info('撤回红包失败，请稍后重试～')
+      Toast.info('销毁红包失败，请稍后重试～')
     }
   }
 

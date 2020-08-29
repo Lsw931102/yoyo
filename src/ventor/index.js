@@ -9,7 +9,7 @@ const cfxUrl = 'http://mainnet-jsonrpc.conflux-chain.org:12537'
 
 const cfx = new Conflux({
   url: process.argv[3] ? process.argv[3] : cfxUrl,
-  defaultGasPrice: 10,
+  defaultGasPrice: 10000,
   defaultGas: 10000000
 })
 

@@ -21,6 +21,10 @@ const CreateModal: React.FC<IProps> = ({ close, freshPage }) => {
       Toast.info('请输入正确的红包数量！')
       return
     }
+    if (key.indexOf('&') > -1 || key.indexOf('#') > -1) {
+      Toast.info('口令不能输入&和#哦～')
+      return
+    }
     try {
       const account = cfx.Account(getLocalStorage('privateKey') || '')
       const receipt = await contract
@@ -41,7 +45,7 @@ const CreateModal: React.FC<IProps> = ({ close, freshPage }) => {
   return (
     <>
       <div className={styles.text}>请在下方输入框中</div>
-      <div className={styles.text}>粘贴口令红包链接，并点击确定</div>
+      <div className={styles.text}>输入红包口令及数量，并点击确定</div>
       <div className={styles.inputs}>
         <input value={key} placeholder="请输入口令" onChange={e => setGet(e.target.value)} />
         <input

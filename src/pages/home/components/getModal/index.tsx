@@ -15,15 +15,17 @@ const GetModal: React.FC<IProps> = ({ freshGot, close }) => {
     Toast.loading('领取中...', 1800)
     try {
       const infoArr = getKey.replace(/#/g, '').split('&')
+      // console.log(infoArr, 898989)
       const contract = cfx.Contract({
         abi,
         address: infoArr[0]
       })
       const account = cfx.Account(getLocalStorage('privateKey') || '')
-      await contract
+      const res = await contract
         .robWelfare(infoArr[1])
         .sendTransaction({ from: account })
         .confirmed()
+      // console.log(res, 90990)
       const gotArr: string[] = JSON.parse(getLocalStorage('gotArr') || '[]')
       const newArr = [infoArr[0], ...gotArr]
       setLocalStorage('gotArr', JSON.stringify(newArr))

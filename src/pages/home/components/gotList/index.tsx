@@ -1,14 +1,13 @@
 import React, { useRef, useImperativeHandle } from 'react'
 import { getLocalStorage } from '@/utils/storage'
 import { ListView } from '@/components'
-import CreateItem from '../createItem'
+import GetItem from '../getItem'
 import { cfx, abi, unit } from '@/ventor'
 
 interface IProps {
-  openSetSum: (address: string) => void
   cRef: any
 }
-const SendList: React.FC<IProps> = ({ openSetSum, cRef }) => {
+const SendList: React.FC<IProps> = ({ cRef }) => {
   const childRef = useRef()
   useImperativeHandle(cRef, () => ({
     pageRefresh: () => {
@@ -19,26 +18,27 @@ const SendList: React.FC<IProps> = ({ openSetSum, cRef }) => {
 
   const getSendList = async param => {
     const { pageNum, pageSize } = param
-    const sendArr: string[] = JSON.parse(getLocalStorage('sendArr') || '[]')
+    const gotArr: string[] = JSON.parse(getLocalStorage('gotArr') || '[]')
     let curArr = []
     let hasNext = 0
-    if (sendArr.slice(pageNum * (pageSize - 1)).length < pageSize) {
-      curArr = sendArr
+    if (gotArr.slice(pageNum * (pageSize - 1)).length < pageSize) {
+      curArr = gotArr
     } else {
-      curArr = sendArr.slice(pageNum * (pageSize - 1), pageNum * pageSize)
+      curArr = gotArr.slice(pageNum * (pageSize - 1), pageNum * pageSize)
       hasNext = 1
     }
     if (curArr.length) {
       try {
-        const promises = sendArr.map(async (it: string) => {
+        const promises = gotArr.map(async (it: string) => {
           const info = await getConInfo(it)
           return info
         })
         const infos = await Promise.all(promises)
-        const sendList = []
+        // console.log(infos, 45454)
+        const gotList = []
         infos.map((info, index) => {
-          sendList.push({
-            address: sendArr[index],
+          gotList.push({
+            address: gotArr[index],
             key: info[0],
             sum: Number(info[3]) ? unit.fromDripToCFX(Number(info[3])) : Number(info[3]),
             num: Number(info[1]),
@@ -46,8 +46,9 @@ const SendList: React.FC<IProps> = ({ openSetSum, cRef }) => {
             status: Number(info[4])
           })
         })
+        // console.log(gotList, 66666)
         return {
-          list: sendList,
+          list: gotList,
           hasNext
         }
       } catch (err) {
@@ -63,12 +64,14 @@ const SendList: React.FC<IProps> = ({ openSetSum, cRef }) => {
       abi,
       address: item
     })
+    // console.log(nowContract, 333)
     const info = await nowContract.getWelfareInfo(getLocalStorage('account') || '')
+    // console.log(info, JSON.parse(JSON.stringify(info)), 9999)
     return JSON.parse(JSON.stringify(info))
   }
   const row = rowData => {
     // @ts-ignore
-    return <CreateItem data={rowData} setSum={openSetSum} freshPage={childRef.current.onRefresh} />
+    return <GetItem data={rowData} freshPage={childRef.current.onRefresh} />
   }
 
   return <ListView requestFun={getSendList} renderRow={row} cRef={childRef} />

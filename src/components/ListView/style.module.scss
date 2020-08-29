@@ -1,0 +1,28 @@
+// 样式重写
+
+:global {
+  .am-list-view-scrollview {
+    margin: 0 !important;
+  }
+
+  .am-list-header {
+    padding: 0 !important;
+  }
+
+  .list-view-section-body div:nth-child(2n) {
+    height: 0 !important;
+  }
+}
+
+.freshFont {
+  font-size: 12px;
+  line-height: 32px;
+  text-align: center;
+  color: #989898;
+}
+
+.activeStyle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
