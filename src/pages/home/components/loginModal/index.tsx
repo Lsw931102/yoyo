@@ -17,7 +17,11 @@ const LoginModal: React.FC<IProps> = ({ login }) => {
     <>
       <div className={styles.text}>请输入你的私钥</div>
       <div className={styles.inputs}>
-        <input value={privateKey} placeholder="请输入私钥" onChange={e => setprivate(e.target.value)} />
+        <input
+          value={privateKey}
+          placeholder="请输入私钥"
+          onChange={e => setprivate(e.target.value.slice(0, 2) === '0x' ? e.target.value : `0x${e.target.value}`)}
+        />
       </div>
       <div className={styles.buttons} onClick={confirm}>
         确定
