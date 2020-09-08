@@ -55,7 +55,10 @@ const SendList: React.FC<IProps> = ({ cRef }) => {
         // console.log(err, 1111)
       }
     } else {
-      return null
+      return {
+        list: [],
+        hasNext
+      }
     }
   }
 

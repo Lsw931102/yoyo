@@ -31,6 +31,7 @@ const GetModal: React.FC<IProps> = ({ freshGot, close }) => {
       setLocalStorage('gotArr', JSON.stringify(newArr))
       freshGot()
     } catch (err) {
+      // console.log(err, 55555)
       Toast.info('红包领取失败，请稍后重试～')
     }
     Toast.hide()
