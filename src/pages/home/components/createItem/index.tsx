@@ -7,6 +7,7 @@ import styles from './style.module.scss'
 import * as imgs from '@/assets/images'
 import { getLocalStorage, setLocalStorage } from '@/utils/storage'
 import { abi, cfx } from '@/ventor'
+import { number } from 'prop-types'
 
 const alert = Modal.alert
 
@@ -85,7 +86,7 @@ const CreateItem: React.FC<IProps> = ({ data, setSum, freshPage }) => {
       <p className={styles.key}>口令：{data.key}</p>
       <div className={styles.numLine}>
         <div className={styles.item}>
-          <p>金额：{data.sum ? <>{data.sum.length > 4 ? Number(data.sum).toFixed(4) : data.sum}FC</> : null}</p>
+          <p>金额：{data.sum ? <>{data.sum.length > 4 ? Number(data.sum).toFixed(4) : data.sum}FC</> : 0}</p>
           {!data.status && !data.sum ? (
             <div className={styles.setNum} onClick={() => setSum(data.address)}>
               设置金额
