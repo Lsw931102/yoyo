@@ -36,7 +36,8 @@ const CreateModal: React.FC<IProps> = ({ close, freshPage }) => {
       const newArr = [receipt.contractCreated, ...sendArr]
       setLocalStorage('sendArr', JSON.stringify(newArr))
       freshPage()
-    } catch {
+    } catch (err) {
+      // console.log(err, 777)
       Toast.info('红包创建失败，请稍后重试～')
     }
     close()
